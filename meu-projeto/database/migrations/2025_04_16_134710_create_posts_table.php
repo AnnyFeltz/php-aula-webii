@@ -11,15 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('documentos', function (Blueprint $table) {
+        Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->string('url');
-            $table->string('descricao');
-            $table->float('horas_in');
-            $table->string('status');
-            $table->string('comentario');
-            $table->float('horas_out');
-            $table->softDeletes();
+            $table->string('title');
             $table->timestamps();
         });
     }
@@ -29,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('documentos');
+        Schema::dropIfExists('posts');
     }
 };

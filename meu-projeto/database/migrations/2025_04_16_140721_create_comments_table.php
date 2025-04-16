@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('comprovantes', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
-            $table->float('horas');
-            $table->string('atividade');
-            $table->softDeletes();
+            $table->text('content');
+            $table->foreignId('post_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('comprovantes');
+        Schema::dropIfExists('comments');
     }
 };
