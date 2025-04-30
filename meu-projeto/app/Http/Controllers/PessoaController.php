@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Pessoa;
+use Symfony\Component\VarDumper\Caster\RedisCaster;
 
 class PessoaController extends Controller
 {
@@ -55,7 +56,7 @@ class PessoaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        return view("pessoas.edit");
     }
 
     /**
@@ -63,7 +64,19 @@ class PessoaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $pessoa = Pessoa::find($id);
+
+        if (isset($pessoa)){
+            $pessoa->nome = $request->nome;
+            $pessoa->idade = $request->idade;
+            $pessoa->cpf = $request->cpf;
+
+            $pessoa->save();
+
+            return redirect()->route('pessoas.index');
+        }
+
+        return redirect()->route('pessoas.error');
     }
 
     /**
@@ -71,6 +84,13 @@ class PessoaController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $pessoa = Pessoa::find($id);
+
+        if (isset($pessoas)) {
+            $pessoa->delete();
+            return '<h1>Registro excluído</h1>';
+        }
+
+        return '<h1>Não excluído</h1>';
     }
 }
